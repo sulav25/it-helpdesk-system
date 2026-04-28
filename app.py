@@ -24,8 +24,8 @@ def add_ticket():
     priority = input("Enter priority (Low/Medium/High): ")
 
     # Validation 
-    if name == "" or issue == "":
-        print("Error: Fields cannot be empty\n")
+    if not name.strip() or not issue.strip():
+        print("Error: Name and issue cannot be empty\n")
         return
 
     conn = sqlite3.connect("tickets.db")
