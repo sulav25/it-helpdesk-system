@@ -55,9 +55,16 @@ def view_tickets():
     if len(rows) == 0:
         print("No tickets found.\n")
     else:
-        for row in rows:
-            print(row)
-        print()
+        print("*** Tickets ***")
+
+    for row in rows:
+        print("ID:", row[0])
+        print("Name:", row[1])
+        print("Issue:", row[2])
+        print("Priority:", row[3])
+        print("Status:", row[4])
+
+    print()
 
 def update_ticket_status():
     print("Update Ticket Status")
