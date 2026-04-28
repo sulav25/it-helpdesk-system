@@ -72,7 +72,7 @@ def update_ticket_status():
     ticket_id = input("Enter Ticket ID: ")
     new_status = input("Enter new status (Open / In Progress / Resolved): ")
 
-    conn = sqlite3.connect("school_helpdesk.db")
+    conn = sqlite3.connect("tickets.db")
     cursor = conn.cursor()
 
     cursor.execute(
