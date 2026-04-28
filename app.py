@@ -59,6 +59,25 @@ def view_tickets():
             print(row)
         print()
 
+def update_ticket_status():
+    print("Update Ticket Status")
+
+    ticket_id = input("Enter Ticket ID: ")
+    new_status = input("Enter new status (Open / In Progress / Resolved): ")
+
+    conn = sqlite3.connect("school_helpdesk.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE tickets SET status = ? WHERE id = ?",
+        (new_status, ticket_id)
+    )
+
+    conn.commit()
+    conn.close()
+
+    print("Ticket status updated successfully!\n")
+
 
 # Main menu
 def main():
@@ -68,7 +87,8 @@ def main():
         print("Help Desk System")
         print("1. Add Ticket")
         print("2. View Tickets")
-        print("3. Exit")
+        print("3. Update Ticket Status")
+        print("4. Exit")
 
         choice = input("Enter choice: ")
 
@@ -77,10 +97,10 @@ def main():
         elif choice == "2":
             view_tickets()
         elif choice == "3":
-            print("Exiting program.")
+            update_ticket_status()
+        elif choice == "4":
+            print("Exiting system.")
             break
-        else:
-            print("Invalid choice. Try again.\n")
 
 
 # Run program
