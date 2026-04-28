@@ -1,0 +1,88 @@
+import sqlite3
+
+#Database and table
+def setup_database():
+    conn = sqlite3.connect("tickets.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS tickets (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        issue TEXT,
+        priority TEXT,
+        status TEXT
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+def add_ticket():
+    name = input("Enter your name: ")
+    issue = input("Enter issue: ")
+    priority = input("Enter priority (Low/Medium/High): ")
+
+    # Validation 
+    if name == "" or issue == "":
+        print("Error: Fields cannot be empty\n")
+        return
+
+    conn = sqlite3.connect("tickets.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "INSERT INTO tickets (name, issue, priority, status) VALUES (?, ?, ?, ?)",
+        (name, issue, priority, "Open")
+    )
+
+    conn.commit()
+    conn.close()
+
+    print("Ticket added successfully!\n")
+
+
+# View tickets
+def view_tickets():
+    conn = sqlite3.connect("tickets.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM tickets")
+    rows = cursor.fetchall()
+
+    conn.close()
+
+    if len(rows) == 0:
+        print("No tickets found.\n")
+    else:
+        for row in rows:
+            print(row)
+        print()
+
+
+# Main menu
+def main():
+    setup_database()
+
+    while True:
+        print("Help Desk System")
+        print("1. Add Ticket")
+        print("2. View Tickets")
+        print("3. Exit")
+
+        choice = input("Enter choice: ")
+
+        if choice == "1":
+            add_ticket()
+        elif choice == "2":
+            view_tickets()
+        elif choice == "3":
+            print("Exiting program.")
+            break
+        else:
+            print("Invalid choice. Try again.\n")
+
+
+# Run program
+if __name__ == "__main__":
+    main()
